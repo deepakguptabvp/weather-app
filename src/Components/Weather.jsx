@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaWind } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { WiHumidity } from "react-icons/wi";
 import './Weather.css';
 
 
 const Weather = () => {
 
   const [city, setCity] = useState('');
-  // eslint-disable-next-line
   const [weather, setWeather] = useState('')
   const [error, setError] = useState('')
 
@@ -14,8 +15,8 @@ const Weather = () => {
   // console.log(description);
   // const capitalizedDescription = description.charAt(0).toUpperCase() + description.slice(1);
 
-  const API_KEY = "776ee648de6a5eb986f140c70c3eb660"
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
+  const apiKey = process.env.REACT_APP_WEATHER_API;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
 
   const handleOnChange = (event) => {
     setCity(event.target.value);
@@ -32,16 +33,19 @@ const Weather = () => {
         console.log(parsedData);
         setError('');
       } else {
-        setError('No data found. Please Enter a valid City name.')
+        setError('No data found. Please Enter a valid or full City name')
+        setWeather('');
       }
     } catch (error) {
-
     }
   }
 
 
   return (
     <div className='container'>
+
+      <div className='heading-w'><u> Weather-App </u></div>
+
       <div className='city'>
         <input type="text" value={city} onChange={handleOnChange} placeholder='Enter your city name here.' />
         <button onClick={fetchData}>
@@ -52,23 +56,51 @@ const Weather = () => {
       {/* check for wrong city name and show error message */}
       {
         error && <p className='error-message'>{error}</p>
+
       }
 
-      {/*to show the weather details in the UI part  */}
+      {/*code for all weather details in the UI part  */}
       {
         weather && weather.weather &&
+
         <div className="content">
-          
+
           <div className="weather-image">
-            <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt="weather image" />
-           
+            <img src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`} alt="weather-img" />
             <h3 className='desc'>{weather.weather[0].description}</h3>
           </div>
 
-          <div className="temp">
+          <div className="weather-temp">
             <h3 className='temp'>{weather.main.temp} <span>&deg;C</span> </h3>
           </div>
 
+          <div className="weather-city">
+            <div className="location">
+              <FaLocationDot />
+            </div>
+            <p style={{ marginTop: "10px" }}>{weather.name},<span>{weather.sys.country}</span></p>
+          </div>
+
+          {/* Rendering Weather Humidity & Wind Speed to UI part */}
+          <div className="weather-stats">
+
+            <div className="humidity">
+              <div className="humidity-icon">
+                <WiHumidity />
+              </div>
+              <h3 className='humidity-percent'>{weather.main.humidity}<span>%</span></h3>
+              <h3 className='humidity-heading'>Humidity</h3>
+            </div>
+
+            <div className="wind">
+              <div className="wind-icon">
+                <FaWind />
+              </div>
+              <h3 className='wind-speed'>{weather.wind.speed}<span>km/h</span></h3>
+              <h3 className='wind-heading'>Wind Speed</h3>
+            </div>
+
+          </div>
         </div>
       }
 
