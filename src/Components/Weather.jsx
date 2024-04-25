@@ -15,8 +15,9 @@ const Weather = () => {
   // console.log(description);
   // const capitalizedDescription = description.charAt(0).toUpperCase() + description.slice(1);
 
-  const apiKey = process.env.REACT_APP_WEATHER_API;
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
+  // const apiKey = process.env.REACT_APP_WEATHER_API;
+  const API_KEY = '776ee648de6a5eb986f140c70c3eb660'
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
 
   const handleOnChange = (event) => {
     setCity(event.target.value);
