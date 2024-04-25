@@ -2,7 +2,7 @@
 
 #Run the following commands to run this project
 
-1)git clone <repository-url>
+1)git clone <repository-url> /n
 2)cd weather-app
 3)npm install
 4)npm start
