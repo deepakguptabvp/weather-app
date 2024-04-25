@@ -2,7 +2,7 @@
 
 #Run the following commands to run this project
 
-1)git clone <repository-url>
+1)git clone <https://github.com/deepakguptabvp/weather-app/>
 
 2)cd weather-app
 
